@@ -1,6 +1,6 @@
 class Statement
 
-  attr_accessor :bank_statement
+  attr_reader :bank_statement
 
   def initialize
     @bank_statement = []
@@ -20,6 +20,8 @@ class Statement
   def new_withdrawal(date, amount, new_balance)
     @bank_statement.unshift({date: date, credit: " ", debit: '%.2f' % amount, balance: '%.2f' % new_balance})
   end
+
+  private
 
   def print_headings
     headings = @bank_statement[0].keys

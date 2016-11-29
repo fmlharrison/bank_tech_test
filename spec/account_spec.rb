@@ -4,7 +4,9 @@ describe Account do
 
   subject(:account) {described_class.new}
 
-  let(:statement1) {double :statement1, bank_statement: [{date: "18/01/2012", credit: 500.00, debit: nil, balance: 1500.00},{date: "10/01/2012", credit: 1000.00, debit: nil, balance: 1000.00}] }
+  let(:statement2) {double :statement2}
+  subject(:account2) {described_class.new(statement2)}
+
 
   context '#initialize' do
 
@@ -21,8 +23,8 @@ describe Account do
   context '#deposit' do
 
     it "should be about to deposit money into the account" do
-      account.deposit("10/01/2012", 1000.00)
-      expect(account.statement.bank_statement[0][:credit]).to eq "1000.00"
+      expect(statement2).to receive(:new_deposit)
+      account2.deposit("10/01/2012", 1000.00)
     end
 
     it "should change the balance of the account" do
@@ -32,14 +34,23 @@ describe Account do
 
   context '#withdraw' do
 
-    before do
-      account.deposit("18/01/2012", 1000)
-      account.deposit("19/01/2012", 500)
+    it "can withdraw money" do
+      expect(statement2).to receive(:new_withdrawal)
+      account2.withdraw("21/01/2012", 250.00)
     end
 
-    it "can withdraw money" do
-      account.withdraw("21/01/2012", 250.00)
-      expect(account.balance). to eq 1250.00
+    it 'reduces the balance in the account' do
+      account.deposit("10/01/2012", 1000.00)
+      expect{account.withdraw("11/01/2012", 500.00)}.to change{account.balance}.by(-500)
+    end
+
+  end
+
+  context '#show_statment' do
+
+    it "can print the statement" do
+      expect(statement2).to receive(:print_statement)
+      account2.show_statment
     end
 
   end

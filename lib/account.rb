@@ -6,8 +6,8 @@ class Account
 
   attr_reader :statement, :balance
 
-  def initialize
-    @statement = Statement.new
+  def initialize(statement=Statement.new)
+    @statement = statement
     @balance = STARTING_BALANCE
   end
 
