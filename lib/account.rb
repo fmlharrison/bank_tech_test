@@ -1,4 +1,4 @@
-require 'statement'
+require_relative 'statement'
 
 class Account
 
@@ -16,10 +16,23 @@ class Account
     @statement.new_deposit(date, amount, @balance)
   end
 
+  def withdraw(date, amount)
+    decrease_balance(amount)
+    @statement.new_withdrawal(date, amount, @balance)
+  end
+
+  def show_statment
+    @statement.print_statement
+  end
+
   private
 
   def increase_balance(amount)
     @balance += amount
+  end
+
+  def decrease_balance(amount)
+    @balance -= amount
   end
 
 end

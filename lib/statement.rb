@@ -3,17 +3,35 @@ class Statement
   attr_accessor :bank_statement
 
   def initialize
-    @bank_statement = [{date: nil, credit: nil, debit: nil, balance: 0.00}]
+    @bank_statement = []
   end
 
   def print_statement
+    print_headings
     @bank_statement.each do |x|
-      puts "#{x[:date]} || #{x[:credit]} || #{x[:debit]} || #{x[:balance]}"
+      puts "#{spacing(x[:date])}#{spacing(x[:credit])}#{spacing(x[:debit])}#{spacing(x[:balance])}"
     end
   end
 
   def new_deposit(date, amount, new_balance)
-    @bank_statement.unshift({date: date, credit: nil, debit: amount, balance: new_balance})
+    @bank_statement.unshift({date: date, credit: '%.2f' % amount, debit: " " , balance: '%.2f' % new_balance})
+  end
+
+  def new_withdrawal(date, amount, new_balance)
+    @bank_statement.unshift({date: date, credit: " ", debit: '%.2f' % amount, balance: '%.2f' % new_balance})
+  end
+
+  def print_headings
+    headings = @bank_statement[0].keys
+    headings.each do |x|
+      space = 10 - (x.length)
+      print " " + x.to_s + (" "*space) + "||"
+    end
+    puts
+  end
+
+  def spacing(string)
+    print " " + string + (" "*(10-string.length)) + "||"
   end
 
 
