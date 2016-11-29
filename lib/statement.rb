@@ -9,7 +9,7 @@ class Statement
   def print_statement
     print_headings
     @bank_statement.each do |x|
-      puts "#{spacing(x[:date])}#{spacing(x[:credit])}#{spacing(x[:debit])}#{spacing(x[:balance])}"
+      puts "#{spacing(x[:date])}#{spacing(x[:credit])}#{spacing(x[:debit])}#{x[:balance]}"
     end
   end
 
@@ -25,16 +25,19 @@ class Statement
 
   def print_headings
     headings = @bank_statement[0].keys
-    headings.each do |x|
-      space = 10 - (x.length)
-      print " " + x.to_s + (" "*space) + "||"
+    headings.each.with_index do |x, index|
+      if index < 3
+        space = 10 - (x.length)
+        print x.to_s + (" "*space) + "|| "
+      else
+        print x.to_s
+      end
     end
     puts
   end
 
   def spacing(string)
-    print " " + string + (" "*(10-string.length)) + "||"
+    print string + (" "*(10-string.length)) + "|| "
   end
-
 
 end

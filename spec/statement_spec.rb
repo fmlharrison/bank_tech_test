@@ -17,7 +17,7 @@ describe Statement do
 
   it 'prints the bank statement to the STDOUT' do
     statement.new_deposit("10/01/2012", 1000, 1000)
-    expect{ statement.print_statement }.to output(" date      || credit    || debit     || balance   ||\n 10/01/2012|| 1000.00   ||           || 1000.00   ||\n").to_stdout
+    expect{ statement.print_statement }.to output("date      || credit    || debit     || balance\n10/01/2012|| 1000.00   ||           || 1000.00\n").to_stdout
   end
 
   context "#new_deposit" do
