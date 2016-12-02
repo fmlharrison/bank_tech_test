@@ -33,6 +33,6 @@ class Account
 
   def decrease_balance(amount)
     @balance -= amount
-  end
+  end 
 
 end
